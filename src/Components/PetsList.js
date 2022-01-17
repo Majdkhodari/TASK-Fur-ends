@@ -1,8 +1,16 @@
+import { useState } from "react"
 import PetItem from './PetItem';
 
 export default function PetsList(props) {
-  const pets = props.pets.map((pet) => <PetItem key={pet.id} pet={pet} />);
+  const [query, setQuery] = useState("")
+  const changeQuery = (e) => { setQuery(e.target.value)}
+  const pets = props.pets.filter(pet =>pet.name.toLowerCase().includes(query.toLowerCase())).map((pet) => <PetItem key={pet.id} pet={pet} />);
+  const [type, setType] = useState("")
+  const petSelector = (event) => {type(event.target.value)}
+  
+
   return (
+
     <section id="doctors" class="doctor-section pt-140">
       <div class="container">
         <div class="row justify-content-center">
@@ -18,12 +26,14 @@ export default function PetsList(props) {
                   placeholder="Search"
                   aria-label="Search"
                   aria-describedby="search-addon"
+                  onChange ={changeQuery}
                 />
               </div>
               <br />
               Type:
-              <select class="form-select">
-                <option value="" selected>
+              <select class="form-select"   >
+                <option value="" selected 
+                onChange={petSelector}>
                   All
                 </option>
                 <option value="Cat">Cat</option>
