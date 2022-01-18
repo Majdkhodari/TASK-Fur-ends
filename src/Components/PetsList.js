@@ -4,9 +4,9 @@ import PetItem from './PetItem';
 export default function PetsList(props) {
   const [query, setQuery] = useState("")
   const changeQuery = (e) => { setQuery(e.target.value)}
-  const pets = props.pets.filter(pet =>pet.name.toLowerCase().includes(query.toLowerCase())).map((pet) => <PetItem key={pet.id} pet={pet} />);
   const [type, setType] = useState("")
-  const petSelector = (event) => {type(event.target.value)}
+  const petSelector = (event) => {setType(event.target.value)}
+  const pets = props.pets.filter(pet =>pet.name.toLowerCase().includes(query.toLowerCase()) && pet.type.includes(type)).map((pet) => <PetItem key={pet.id} pet={pet} />);
   
 
   return (
@@ -31,9 +31,9 @@ export default function PetsList(props) {
               </div>
               <br />
               Type:
-              <select class="form-select"   >
+              <select class="form-select"  onChange={petSelector}  >
                 <option value="" selected 
-                onChange={petSelector}>
+                >
                   All
                 </option>
                 <option value="Cat">Cat</option>
